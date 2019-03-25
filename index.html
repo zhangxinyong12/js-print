@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>打印</title>
+    <style>
+        /* 媒体查询可以控制打印时候的样式 */
+        @media print {
+            li {
+                color: red;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>头部标题</h1>
+        <div>
+            <button>整体打印</button>
+        </div>
+    </header>
+    <hr>
+    <main>
+        <div>
+            <button>局部打印</button>
+        </div>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+        </ul>
+    </main>
+    <footer>页脚</footer>
+</body>
+<script>
+    let windBody;
+    const init = () => {
+        const btn = document.querySelectorAll('button');
+        const box = document.querySelector('ul');
+        windBody = window.document.body.innerHTML;
+        btn[0].addEventListener('click', () => {
+            window.print(); // 打印整个页面  火狐浏览器不支持预览模式  谷歌浏览器页面看着比较舒服
+        });
+        btn[1].addEventListener('click', () => {
+            // window 赋值 要打印的内容。结束后再重新赋值
+            window.document.body.innerHTML = box.innerHTML;
+            window.print();
+        });
+    }
+    window.onload = init();
+    // 打印弹窗消失之后触发
+    window.onafterprint = () => {
+        window.document.body.innerHTML = windBody;
+        init();
+    }
+</script>
+
+</html>
